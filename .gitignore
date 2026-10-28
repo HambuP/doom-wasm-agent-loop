@@ -1,0 +1,7 @@
+build/
+dist/
+*.o
+*.wasm
+*.data
+node_modules/
+.DS_Store
