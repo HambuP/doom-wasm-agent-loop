@@ -5,3 +5,15 @@ dist/
 *.data
 node_modules/
 .DS_Store
+
+# Local environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local credentials (sanitized examples may be committed)
+.env
+.env.*
+!.env.example
