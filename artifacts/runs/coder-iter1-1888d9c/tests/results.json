@@ -1,0 +1,104 @@
+{
+  "runId": "coder-iter1-1888d9c",
+  "startedAt": "2026-11-04T20:47:36.804Z",
+  "git": {
+    "commit": "1888d9c1c7fa22ceee38a1182784dc47eb4147b5",
+    "dirty": true,
+    "status": "M tests/CRITERIA.md\n?? artifacts/plan.md\n?? artifacts/runs/\n?? package-lock.json\n?? package.json\n?? tests/play.js\n?? tests/run_all.js"
+  },
+  "checks": [
+    {
+      "id": "self-test",
+      "pass": true,
+      "details": {
+        "note": "synthetic frames; see CRITERIA.md"
+      }
+    },
+    {
+      "id": "T1 build",
+      "pass": true,
+      "details": {
+        "exit": 0,
+        "missing": [],
+        "wasmSize": 539314,
+        "log": "artifacts/runs/coder-iter1-1888d9c/tests/build.log"
+      }
+    },
+    {
+      "id": "T3 boots",
+      "pass": true,
+      "details": {
+        "ready": true,
+        "readyMs": 59,
+        "framesIn3s": 106
+      }
+    },
+    {
+      "id": "T2 serve",
+      "pass": true,
+      "details": {
+        "wasmType": "application/wasm",
+        "consoleErrors": [],
+        "pageErrors": [],
+        "failed": [],
+        "badResponses": []
+      }
+    },
+    {
+      "id": "T4 pixels",
+      "pass": true,
+      "details": {
+        "ok": true,
+        "reasons": [],
+        "stats": {
+          "distinct": 113,
+          "topFrac": 0.0825625,
+          "alphaBad": 0,
+          "n": 16000
+        },
+        "changeVsFirst": 0.936
+      }
+    },
+    {
+      "id": "T5 input",
+      "pass": true,
+      "details": {
+        "menuDiff": 0.942,
+        "levelDiff": 0.979,
+        "statusBarDiff": 0.108
+      }
+    },
+    {
+      "id": "T6 gameplay",
+      "pass": true,
+      "details": {
+        "walkDiff": 0.3,
+        "turnDiff": 0.4,
+        "ammoRegionDiff": 0.143
+      }
+    },
+    {
+      "id": "T7 stability",
+      "pass": true,
+      "details": {
+        "crashed": false,
+        "pageErrors": [],
+        "framesIn3sAtEnd": 105,
+        "seed": 12345
+      }
+    },
+    {
+      "id": "T8 WAD",
+      "pass": true,
+      "details": {
+        "external": [],
+        "wadRequests": [],
+        "dataSize": 4196020,
+        "wadSize": 4196020,
+        "levelReached": true
+      }
+    }
+  ],
+  "finishedAt": "2026-11-04T20:49:25.302Z",
+  "passed": true
+}

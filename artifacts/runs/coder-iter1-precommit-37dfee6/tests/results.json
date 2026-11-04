@@ -1,0 +1,102 @@
+{
+  "runId": "coder-iter1-precommit-37dfee6",
+  "startedAt": "2026-11-04T20:44:35.657Z",
+  "git": {
+    "commit": "37dfee6b043b9c56c8fcc87ca752c102f0f56862",
+    "dirty": true,
+    "status": "M platform/doomgeneric_wasm.c\n M tests/CRITERIA.md\n M web/index.html\n?? artifacts/plan.md\n?? artifacts/runs/\n?? package-lock.json\n?? package.json\n?? platform/build.sh\n?? tests/play.js\n?? tests/run_all.js"
+  },
+  "checks": [
+    {
+      "id": "self-test",
+      "pass": true,
+      "details": {
+        "note": "synthetic frames; see CRITERIA.md"
+      }
+    },
+    {
+      "id": "T1 build",
+      "pass": true,
+      "details": {
+        "skipped": true,
+        "note": "--skip-build: only checked dist exists"
+      }
+    },
+    {
+      "id": "T3 boots",
+      "pass": true,
+      "details": {
+        "ready": true,
+        "readyMs": 424,
+        "framesIn3s": 105
+      }
+    },
+    {
+      "id": "T2 serve",
+      "pass": true,
+      "details": {
+        "wasmType": "application/wasm",
+        "consoleErrors": [],
+        "pageErrors": [],
+        "failed": [],
+        "badResponses": []
+      }
+    },
+    {
+      "id": "T4 pixels",
+      "pass": true,
+      "details": {
+        "ok": true,
+        "reasons": [],
+        "stats": {
+          "distinct": 112,
+          "topFrac": 0.07775,
+          "alphaBad": 0,
+          "n": 16000
+        },
+        "changeVsFirst": 0.935
+      }
+    },
+    {
+      "id": "T5 input",
+      "pass": true,
+      "details": {
+        "menuDiff": 0.506,
+        "levelDiff": 0.645,
+        "statusBarDiff": 0.104
+      }
+    },
+    {
+      "id": "T6 gameplay",
+      "pass": true,
+      "details": {
+        "walkDiff": 0.326,
+        "turnDiff": 0.415,
+        "ammoRegionDiff": 0.143
+      }
+    },
+    {
+      "id": "T7 stability",
+      "pass": true,
+      "details": {
+        "crashed": false,
+        "pageErrors": [],
+        "framesIn3sAtEnd": 105,
+        "seed": 12345
+      }
+    },
+    {
+      "id": "T8 WAD",
+      "pass": true,
+      "details": {
+        "external": [],
+        "wadRequests": [],
+        "dataSize": 4196020,
+        "wadSize": 4196020,
+        "levelReached": true
+      }
+    }
+  ],
+  "finishedAt": "2026-11-04T20:46:23.855Z",
+  "passed": true
+}
