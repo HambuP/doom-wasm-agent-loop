@@ -1,0 +1,31 @@
+{
+  "unfocusedEscDiff": 0,
+  "unfocusedEscPrevented": false,
+  "focusedEscDiff": 0.92225,
+  "framesDuringCtrlWalk": 36,
+  "ctrlArrowUpPrevented": [
+    true
+  ],
+  "ctrlL_and_F12": [
+    [
+      "KeyL",
+      true,
+      false,
+      false
+    ],
+    [
+      "F12",
+      false,
+      false,
+      false
+    ]
+  ],
+  "exited": true,
+  "status": "DOOM has exited. Reload the page to play again.",
+  "framesAfterQuit2s": 0,
+  "tickReentries": 0,
+  "pageErrors": [
+    "RuntimeError: function signature mismatch\n    at http://127.0.0.1:60049/doom.wasm:wasm-function[69]:0x17c5f\n    at http://127.0.0.1:60049/doom.wasm:wasm-function[93]:0x18a22\n    at http://127.0.0.1:60049/doom.wasm:wasm-function[31]:0x2358\n    at http://127.0.0.1:60049/doom.wasm:wasm-function[28]:0x1537\n    at http://127.0.0.1:60049/doom.wasm:wasm-function[30]:0x17c8\n    at http://127.0.0.1:60049/doom.wasm:wasm-function[380]:0x37b3d\n    at http://127.0.0.1:60049/doom.wasm:wasm-function[473]:0x43a7e\n    at __asyncify_wrapper_473 (http://127.0.0.1:60049/doom.js:1:85323)\n    at http://127.0.0.1:60049/doom.js:1:14687\n    at iterFunc (http://127.0.0.1:60049/doom.js:1:81812)"
+  ],
+  "consoleFlags": []
+}

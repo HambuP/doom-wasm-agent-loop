@@ -1,0 +1,19 @@
+PASS  self-test: realistic frame accepted by T4
+PASS  self-test: blank frame rejected by T4
+PASS  self-test: alpha-0 (BGRX) frame rejected by T4
+PASS  self-test: single-color-dominated frame rejected by T4
+PASS  self-test: identical frames rejected by change checks
+PASS  self-test: different frames accepted by change checks
+PASS  self-test: ammo region unchanged rejected by T6
+PASS  self-test  {"note":"synthetic frames; see CRITERIA.md"}
+FAIL  T1 build  {"exit":0,"missing":[],"wasmSize":382276,"log":"artifacts/runs/coder-iter2-62b1bcd/tests/build.log"}
+PASS  T3 boots  {"ready":true,"readyMs":61,"framesIn3s":105}
+PASS  T2 serve  {"wasmType":"application/wasm","consoleErrors":[],"pageErrors":[],"failed":[],"badResponses":[]}
+PASS  T4 pixels  {"ok":true,"reasons":[],"stats":{"distinct":115,"topFrac":0.08325,"alphaBad":0,"n":16000},"changeVsFirst":0.935}
+PASS  T5 input  {"menuDiff":0.925,"levelDiff":0.979,"statusBarDiff":0.108}
+PASS  T6 gameplay  {"walkDiff":0.323,"turnDiff":0.417,"ammoRegionDiff":0.143}
+PASS  T7 stability  {"crashed":false,"pageErrors":[],"framesIn3sAtEnd":105,"seed":12345}
+PASS  T8 WAD  {"external":[],"wadRequests":[],"dataSize":4196020,"wadSize":4196020,"levelReached":true}
+
+FAILED: T1 build
+commit 62b1bcd5563fd1598d2f55aa0fac6ff9d9ea5c68 (dirty); results: artifacts/runs/coder-iter2-62b1bcd/tests/results.json

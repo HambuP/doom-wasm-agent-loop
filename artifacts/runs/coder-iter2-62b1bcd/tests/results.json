@@ -1,0 +1,104 @@
+{
+  "runId": "coder-iter2-62b1bcd",
+  "startedAt": "2026-11-04T21:01:19.348Z",
+  "git": {
+    "commit": "62b1bcd5563fd1598d2f55aa0fac6ff9d9ea5c68",
+    "dirty": true,
+    "status": "?? artifacts/plan.md\n?? artifacts/review-iter1-1888d9c.md\n?? artifacts/runs/coder-iter2-62b1bcd/\n?? artifacts/runs/coder-iter2-review-fixes/\n?? artifacts/runs/tester-baseline-37dfee6/"
+  },
+  "checks": [
+    {
+      "id": "self-test",
+      "pass": true,
+      "details": {
+        "note": "synthetic frames; see CRITERIA.md"
+      }
+    },
+    {
+      "id": "T1 build",
+      "pass": false,
+      "details": {
+        "exit": 0,
+        "missing": [],
+        "wasmSize": 382276,
+        "log": "artifacts/runs/coder-iter2-62b1bcd/tests/build.log"
+      }
+    },
+    {
+      "id": "T3 boots",
+      "pass": true,
+      "details": {
+        "ready": true,
+        "readyMs": 61,
+        "framesIn3s": 105
+      }
+    },
+    {
+      "id": "T2 serve",
+      "pass": true,
+      "details": {
+        "wasmType": "application/wasm",
+        "consoleErrors": [],
+        "pageErrors": [],
+        "failed": [],
+        "badResponses": []
+      }
+    },
+    {
+      "id": "T4 pixels",
+      "pass": true,
+      "details": {
+        "ok": true,
+        "reasons": [],
+        "stats": {
+          "distinct": 115,
+          "topFrac": 0.08325,
+          "alphaBad": 0,
+          "n": 16000
+        },
+        "changeVsFirst": 0.935
+      }
+    },
+    {
+      "id": "T5 input",
+      "pass": true,
+      "details": {
+        "menuDiff": 0.925,
+        "levelDiff": 0.979,
+        "statusBarDiff": 0.108
+      }
+    },
+    {
+      "id": "T6 gameplay",
+      "pass": true,
+      "details": {
+        "walkDiff": 0.323,
+        "turnDiff": 0.417,
+        "ammoRegionDiff": 0.143
+      }
+    },
+    {
+      "id": "T7 stability",
+      "pass": true,
+      "details": {
+        "crashed": false,
+        "pageErrors": [],
+        "framesIn3sAtEnd": 105,
+        "seed": 12345
+      }
+    },
+    {
+      "id": "T8 WAD",
+      "pass": true,
+      "details": {
+        "external": [],
+        "wadRequests": [],
+        "dataSize": 4196020,
+        "wadSize": 4196020,
+        "levelReached": true
+      }
+    }
+  ],
+  "finishedAt": "2026-11-04T21:03:06.884Z",
+  "passed": false
+}

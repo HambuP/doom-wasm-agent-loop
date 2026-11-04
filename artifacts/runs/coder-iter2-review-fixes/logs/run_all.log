@@ -1,0 +1,19 @@
+PASS  self-test: realistic frame accepted by T4
+PASS  self-test: blank frame rejected by T4
+PASS  self-test: alpha-0 (BGRX) frame rejected by T4
+PASS  self-test: single-color-dominated frame rejected by T4
+PASS  self-test: identical frames rejected by change checks
+PASS  self-test: different frames accepted by change checks
+PASS  self-test: ammo region unchanged rejected by T6
+PASS  self-test  {"note":"synthetic frames; see CRITERIA.md"}
+FAIL  T1 build  {"exit":0,"missing":[],"wasmSize":382140,"log":"artifacts/runs/coder-iter2-review-fixes/tests/build.log"}
+PASS  T3 boots  {"ready":true,"readyMs":85,"framesIn3s":105}
+FAIL  T2 serve  {"wasmType":"application/wasm","consoleErrors":[],"pageErrors":["RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function"],"failed":[],"badResponses":[]}
+PASS  T4 pixels  {"ok":true,"reasons":[],"stats":{"distinct":114,"topFrac":0.0800625,"alphaBad":0,"n":16000},"changeVsFirst":0.936}
+PASS  T5 input  {"menuDiff":0.939,"levelDiff":0.979,"statusBarDiff":0.11}
+PASS  T6 gameplay  {"walkDiff":0.307,"turnDiff":0.393,"ammoRegionDiff":0.143}
+FAIL  T7 stability  {"crashed":false,"pageErrors":["RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function","RuntimeError: null function"],"framesIn3sAtEnd":105,"seed":12345}
+PASS  T8 WAD  {"external":[],"wadRequests":[],"dataSize":4196020,"wadSize":4196020,"levelReached":true}
+
+FAILED: T1 build, T2 serve, T7 stability
+commit 052978a6cd3aa4e21a42fc1bf63880c6cde5a33a (dirty); results: artifacts/runs/coder-iter2-review-fixes/tests/results.json
