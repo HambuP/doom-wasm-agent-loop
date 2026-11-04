@@ -97,9 +97,9 @@ void DG_DrawFrame()
     for (i = 0; i < DOOMGENERIC_RESX * DOOMGENERIC_RESY; ++i)
     {
         uint32_t p = src[i];
-        dst[0] = p & 0xff;
+        dst[0] = (p >> 16) & 0xff;
         dst[1] = (p >> 8) & 0xff;
-        dst[2] = (p >> 16) & 0xff;
+        dst[2] = p & 0xff;
         dst[3] = 0xff;
         dst += 4;
     }
