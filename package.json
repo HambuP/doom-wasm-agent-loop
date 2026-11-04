@@ -1,0 +1,27 @@
+{
+  "name": "fellowship-loop-capstone",
+  "version": "1.0.0",
+  "description": "**You have one week to design, operate, and evaluate a multi-agent system that can carry a substantial software task through to a verified result.**",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bse-at-ucla/fellowship-loop-capstone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bse-at-ucla/fellowship-loop-capstone/issues"
+  },
+  "homepage": "https://github.com/bse-at-ucla/fellowship-loop-capstone#readme",
+  "dependencies": {
+    "playwright": "^1.64.1"
+  }
+}
