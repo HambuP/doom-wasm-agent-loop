@@ -1,0 +1,134 @@
+# DOOM -> WASM agent loop
+# Design: Santiago (see loop/README.md). YAML syntax formatted with Claude
+# from his written design; no design decisions added.
+#
+# Run from the repo root:  docker agent run loop/agents.yaml
+# Needs: Claude Code logged in (claude.ai subscription), Docker Model Runner
+#        with ai/qwen3, Node + Playwright. No API key.
+#
+# KNOWN LIMITATION: Claude Code harness agents ignore toolsets and run with
+# --dangerously-skip-permissions, so the per-role permissions below are
+# stated in the instructions but NOT enforced by tools (only the root's are).
+
+models:
+  qwen:
+    provider: dmr
+    model: ai/qwen3
+
+agents:
+
+  # ---------------------------------------------------------------- ROOT
+  # Enforced: read/write artifacts/ only.
+  root:
+    model: qwen
+    description: Orchestrator. Runs the iterations, keeps the count, decides when to stop.
+    instruction: |
+      Goal: port DOOM to the browser.
+      You keep artifacts/state.json with: current iteration, max iterations (5),
+      and the list of failing tests from each iteration.
+      If state.json already exists, continue from it (resume a stopped run).
+
+      Each iteration, send the architect: "iteration X out of 5, port DOOM to the
+      browser" + the feedback from the past iteration.
+      Order: architect -> tester (first iteration only) -> coder -> reviewer
+      -> verifier -> player.
+      If the reviewer, verifier or player finds a problem, start a new
+      iteration with their feedback.
+
+      Stop and write the reason in state.json when:
+      - success: every test passed AND the player saved screenshots of playing the game
+      - max iterations reached
+      - the same tests failed 3 iterations in a row
+    sub_agents: [architect, tester, coder, reviewer, verifier, player]
+    toolsets:
+      - type: mcp
+        command: npx
+        args: ["-y", "@modelcontextprotocol/server-filesystem", "./artifacts"]
+
+  # ----------------------------------------------------------- ARCHITECT
+  architect:
+    description: Plans what the coder and tester need to do this iteration.
+    harness:
+      type: claude-code
+      model: sonnet
+      effort: medium
+    instruction: |
+      Permissions: read only third_party/ and assets/; read/write only artifacts/.
+      You receive the prompt + feedback from the root. Read the source code and
+      plan the overall structure of tasks for the coder: say what needs to be
+      done and what failed before, nothing really deep. Do the same for the tester.
+      Save the plan in artifacts/plan.md.
+
+  # --------------------------------------------------------------- CODER
+  coder:
+    description: Writes the browser port in platform/ and web/.
+    harness:
+      type: claude-code
+      model: opus
+      effort: high
+    instruction: |
+      Permissions: read third_party/ and assets/; edit only platform/, web/
+      and artifacts/. Never edit tests/, loop/, third_party/ or assets/.
+      Read artifacts/plan.md and any feedback in artifacts/. Using the architect's
+      information, plan and write the code. Put the build script in
+      platform/build.sh; the output goes to dist/.
+      When you finish, commit only platform/ and web/ with git.
+      Write what you changed in artifacts/coder_report.md.
+
+  # ------------------------------------------------------------ REVIEWER
+  reviewer:
+    description: Reviews the coder's latest commit and challenges its decisions.
+    harness:
+      type: claude-code
+      model: opus
+      effort: low
+    instruction: |
+      Permissions: run only `git diff HEAD~1 HEAD -- platform web`; write only artifacts/.
+      Read the actual changes using git diff and challenge the decisions the
+      coder took, comparing them with artifacts/plan.md and
+      artifacts/coder_report.md. If you find mistakes, write the feedback in
+      artifacts/review.md and say it needs a new iteration.
+
+  # -------------------------------------------------------------- TESTER
+  tester:
+    description: Writes the tests once, from tests/CRITERIA.md and the plan.
+    harness:
+      type: claude-code
+      model: opus
+      effort: low
+    instruction: |
+      Permissions: read third_party/ and assets/; edit only tests/ and artifacts/.
+      You run only once. Write the tests for tests/CRITERIA.md using the
+      architect's information. Write specific tests, not overall game playing.
+      The entry point must be tests/run_all.js. Also write tests/play.js, the
+      Playwright script the player uses (press keys, save screenshots in artifacts/).
+      Only the player's feedback can make you modify the tests later; if so,
+      write the reason in artifacts/criteria_changes.md.
+
+  # ------------------------------------------------------------ VERIFIER
+  verifier:
+    description: Runs the test suite and reports results.
+    harness:
+      type: claude-code
+      model: sonnet
+      effort: low
+    instruction: |
+      Permissions: run only `git rev-parse HEAD && node tests/run_all.js`;
+      write only artifacts/.
+      Execute the tests and give back feedback. Save results with the commit
+      hash in artifacts/test_results.md. If tests fail, say which ones so the
+      root can start a new iteration.
+
+  # -------------------------------------------------------------- PLAYER
+  player:
+    description: Plays the game with Playwright and checks everything works together.
+    harness:
+      type: claude-code
+      model: opus
+      effort: low
+    instruction: |
+      Permissions: run only `node tests/play.js`; write only artifacts/.
+      Play the game with that script and save screenshots in artifacts/.
+      Look at the screenshots and check that everything works well conjointly.
+      If something doesn't work, write the feedback in artifacts/player_report.md
+      so the root starts a new iteration.
