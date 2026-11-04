@@ -61,16 +61,20 @@ CFLAGS=(
 ENGINE_CFLAGS=(-Wno-everything)
 PLATFORM_CFLAGS=(-Wall -Wextra)
 
-# Asyncify: DG_SleepMs calls emscripten_sleep. Every path from main()/frame()
+# Asyncify: DG_SleepMs calls emscripten_sleep. Inside the engine, every path
 # to it is direct calls (doomgeneric_Tick -> TryRunTics/D_Display -> I_Sleep
 # -> DG_SleepMs; D_DoomMain -> D_DoomLoop -> TryRunTics at startup), so
 # indirect calls are ignored and only direct callers of the sleep are
-# instrumented. If a future sleep is reached through a function pointer, add
-# the function that makes the indirect call to -sASYNCIFY_ADD.
+# instrumented. The one indirect call on the path is the main loop calling
+# frame() through the dynCall_v export, so dynCall_v is added explicitly;
+# without it, rewinding calls dynCall_v with no function pointer
+# ("RuntimeError: null function"). If a future sleep is reached through a
+# function pointer, add the function that makes that call to ASYNCIFY_ADD.
 # Set ASYNCIFY_ADVISE=1 to print the instrumented functions at link time.
 ASYNCIFY_FLAGS=(
     -sASYNCIFY=1
     -sASYNCIFY_IGNORE_INDIRECT=1
+    -sASYNCIFY_ADD=dynCall_v
     -sASYNCIFY_STACK_SIZE=65536
 )
 if [ "${ASYNCIFY_ADVISE:-0}" = 1 ]; then
