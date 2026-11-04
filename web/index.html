@@ -5,13 +5,95 @@
   <title>Doom (WASM)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    html, body { margin: 0; height: 100%; background: #000; }
-    body { display: flex; align-items: center; justify-content: center; }
-    canvas { background: #111; }
+    html, body { margin: 0; height: 100%; background: #000; color: #aaa; font: 14px sans-serif; }
+    body { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    canvas { background: #111; outline: none; image-rendering: pixelated; }
+    #status { margin-top: 8px; min-height: 1.2em; }
   </style>
 </head>
 <body>
-  <canvas id="canvas" width="640" height="400"></canvas>
-  <!-- Wire your build output in here. -->
+  <canvas id="canvas" width="640" height="400" tabindex="0"></canvas>
+  <div id="status">Loading…</div>
+  <script>
+    // Browser KeyboardEvent.code -> Doom key code (doomkeys.h / lowercase ASCII).
+    var DOOM_KEYS = {
+      ArrowRight: 0xae, ArrowLeft: 0xac, ArrowUp: 0xad, ArrowDown: 0xaf,
+      ControlLeft: 0xa3, ControlRight: 0xa3,       // KEY_FIRE
+      Space: 0xa2,                                 // KEY_USE
+      ShiftLeft: 0xb6, ShiftRight: 0xb6,           // KEY_RSHIFT (run)
+      AltLeft: 0xb8, AltRight: 0xb8,               // KEY_RALT (strafe)
+      Escape: 27, Enter: 13, NumpadEnter: 13, Tab: 9, Backspace: 0x7f,
+      Pause: 0xff, CapsLock: 0xba,
+      F1: 0xbb, F2: 0xbc, F3: 0xbd, F4: 0xbe, F5: 0xbf, F6: 0xc0,
+      F7: 0xc1, F8: 0xc2, F9: 0xc3, F10: 0xc4, F11: 0xd7, F12: 0xd8,
+      Minus: 0x2d, Equal: 0x3d, Comma: 0x2c, Period: 0x2e, Slash: 0x2f,
+      Semicolon: 0x3b, Quote: 0x27, Backquote: 0x60,
+      BracketLeft: 0x5b, BracketRight: 0x5d, Backslash: 0x5c
+    };
+    (function () {
+      var i;
+      for (i = 0; i < 26; i++) {
+        DOOM_KEYS['Key' + String.fromCharCode(65 + i)] = 97 + i;
+      }
+      for (i = 0; i < 10; i++) {
+        DOOM_KEYS['Digit' + i] = 48 + i;
+      }
+    })();
+
+    var held = {};
+    var statusEl = document.getElementById('status');
+    var canvas = document.getElementById('canvas');
+
+    function doomKeyFor(e) {
+      return DOOM_KEYS[e.code] || 0;
+    }
+
+    function sendKey(pressed, key) {
+      if (Module.calledRun && Module._doom_key_event) {
+        Module._doom_key_event(pressed ? 1 : 0, key);
+      }
+    }
+
+    window.addEventListener('keydown', function (e) {
+      var key = doomKeyFor(e);
+      if (!key) return;
+      e.preventDefault();
+      if (e.repeat && held[key]) return;
+      held[key] = true;
+      sendKey(true, key);
+    });
+
+    window.addEventListener('keyup', function (e) {
+      var key = doomKeyFor(e);
+      if (!key) return;
+      e.preventDefault();
+      delete held[key];
+      sendKey(false, key);
+    });
+
+    // Release every held key when focus leaves the page, so keys don't stick.
+    window.addEventListener('blur', function () {
+      Object.keys(held).forEach(function (k) { sendKey(false, +k); });
+      held = {};
+    });
+
+    canvas.addEventListener('click', function () { canvas.focus(); });
+
+    window.doomReady = false;
+    window.doomFrameCount = 0;
+
+    var Module = {
+      canvas: canvas,
+      print: function (text) { console.log(text); },
+      printErr: function (text) { console.warn(text); },
+      setStatus: function (text) { statusEl.textContent = text; },
+      onRuntimeInitialized: function () {
+        statusEl.textContent = 'Click the game to focus. Arrows move, Ctrl fires, Space opens doors, Shift runs.';
+        canvas.focus();
+      },
+      onAbort: function (what) { statusEl.textContent = 'Error: ' + what; }
+    };
+  </script>
+  <script src="doom.js"></script>
 </body>
 </html>
