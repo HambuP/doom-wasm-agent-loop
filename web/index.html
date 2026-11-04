@@ -48,36 +48,64 @@
       return DOOM_KEYS[e.code] || 0;
     }
 
+    // Keys that stay with the browser even while the game has focus:
+    // reload, fullscreen and developer tools.
+    var BROWSER_KEYS = { F5: true, F11: true, F12: true };
+
+    // Game keys that are still sent while Ctrl is held (Ctrl is fire, so
+    // players move, turn, run and switch weapons while holding it).
+    var CTRL_GAME_KEYS = {
+      ArrowRight: true, ArrowLeft: true, ArrowUp: true, ArrowDown: true,
+      ControlLeft: true, ControlRight: true, Space: true,
+      ShiftLeft: true, ShiftRight: true, AltLeft: true, AltRight: true,
+      Escape: true, Enter: true, NumpadEnter: true
+    };
+
+    // Whether a keydown belongs to the game rather than the browser.
+    // Meta (Cmd) shortcuts and Ctrl+letter shortcuts such as Ctrl+R or
+    // Ctrl+L are left to the browser.
+    function isGameKeydown(e) {
+      if (BROWSER_KEYS[e.code] || e.metaKey) return false;
+      if (e.ctrlKey && !CTRL_GAME_KEYS[e.code] && !/^Digit/.test(e.code)) return false;
+      return true;
+    }
+
     function sendKey(pressed, key) {
       if (Module.calledRun && Module._doom_key_event) {
         Module._doom_key_event(pressed ? 1 : 0, key);
       }
     }
 
-    window.addEventListener('keydown', function (e) {
+    // Listeners are on the canvas, so keys only reach the game (and are only
+    // kept from the browser) while the canvas has focus.
+    canvas.addEventListener('keydown', function (e) {
       var key = doomKeyFor(e);
-      if (!key) return;
+      if (!key || !isGameKeydown(e)) return;
       e.preventDefault();
       if (e.repeat && held[key]) return;
       held[key] = true;
       sendKey(true, key);
     });
 
-    window.addEventListener('keyup', function (e) {
+    // Always release a key the game saw pressed, whatever the modifiers now.
+    canvas.addEventListener('keyup', function (e) {
       var key = doomKeyFor(e);
-      if (!key) return;
+      if (!key || !held[key]) return;
       e.preventDefault();
       delete held[key];
       sendKey(false, key);
     });
 
-    // Release every held key when focus leaves the page, so keys don't stick.
-    window.addEventListener('blur', function () {
+    // Release every held key when the canvas or the page loses focus, so
+    // keys don't stick.
+    function releaseAll() {
       Object.keys(held).forEach(function (k) { sendKey(false, +k); });
       held = {};
-    });
+    }
+    canvas.addEventListener('blur', releaseAll);
+    window.addEventListener('blur', releaseAll);
 
-    canvas.addEventListener('click', function () { canvas.focus(); });
+    canvas.addEventListener('mousedown', function () { canvas.focus(); });
 
     window.doomReady = false;
     window.doomFrameCount = 0;
@@ -91,7 +119,16 @@
         statusEl.textContent = 'Click the game to focus. Arrows move, Ctrl fires, Space opens doors, Shift runs.';
         canvas.focus();
       },
-      onAbort: function (what) { statusEl.textContent = 'Error: ' + what; }
+      onAbort: function (what) { statusEl.textContent = 'Error: ' + what; },
+      // Called by the platform layer when the engine quits or hits a fatal
+      // error; the main loop has already stopped.
+      onDoomExit: function () {
+        releaseAll();
+        statusEl.textContent = 'DOOM has exited. Reload the page to play again.';
+      },
+      onExit: function (code) {
+        statusEl.textContent = 'DOOM exited (status ' + code + '). Reload the page to play again.';
+      }
     };
   </script>
   <script src="doom.js"></script>

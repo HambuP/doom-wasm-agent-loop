@@ -9,6 +9,7 @@
 #   dist/doom.js     (Emscripten loader)
 #   dist/doom.wasm   (engine + platform layer)
 #   dist/doom.data   (preloaded assets/doom1.wad, mounted at /doom1.wad)
+#   build/obj/       (intermediate object files)
 
 set -euo pipefail
 
@@ -41,26 +42,43 @@ fi
 ENGINE=third_party/doomgeneric
 WAD=assets/doom1.wad
 OUT=dist
+OBJ=build/obj
 
-# Engine sources: everything except mus2mid's standalone tool entry point
-# (guarded by STANDALONE, so mus2mid.c itself is safe to compile).
-SOURCES=()
-for f in "$ENGINE"/*.c; do
-    SOURCES+=("$f")
-done
-SOURCES+=(platform/doomgeneric_wasm.c)
+# Engine sources: all of them. mus2mid.c's standalone main() is guarded by
+# STANDALONE, and dummy.c supplies symbols the linker needs.
+ENGINE_SOURCES=("$ROOT/$ENGINE"/*.c)
+PLATFORM_SOURCE=platform/doomgeneric_wasm.c
 
 CFLAGS=(
     -O2
-    -I"$ENGINE"
+    -I"$ROOT/$ENGINE"
     -DDOOMGENERIC_RESX=640
     -DDOOMGENERIC_RESY=400
-    -Wno-everything
 )
 
-LDFLAGS=(
+# The supplied engine is read-only and warns a lot; silence it, but keep full
+# warnings for our own platform layer.
+ENGINE_CFLAGS=(-Wno-everything)
+PLATFORM_CFLAGS=(-Wall -Wextra)
+
+# Asyncify: DG_SleepMs calls emscripten_sleep. Every path from main()/frame()
+# to it is direct calls (doomgeneric_Tick -> TryRunTics/D_Display -> I_Sleep
+# -> DG_SleepMs; D_DoomMain -> D_DoomLoop -> TryRunTics at startup), so
+# indirect calls are ignored and only direct callers of the sleep are
+# instrumented. If a future sleep is reached through a function pointer, add
+# the function that makes the indirect call to -sASYNCIFY_ADD.
+# Set ASYNCIFY_ADVISE=1 to print the instrumented functions at link time.
+ASYNCIFY_FLAGS=(
     -sASYNCIFY=1
+    -sASYNCIFY_IGNORE_INDIRECT=1
     -sASYNCIFY_STACK_SIZE=65536
+)
+if [ "${ASYNCIFY_ADVISE:-0}" = 1 ]; then
+    ASYNCIFY_FLAGS+=(-sASYNCIFY_ADVISE=1)
+fi
+
+LDFLAGS=(
+    "${ASYNCIFY_FLAGS[@]}"
     -sALLOW_MEMORY_GROWTH=1
     -sINITIAL_MEMORY=64MB
     -sSTACK_SIZE=1MB
@@ -70,14 +88,20 @@ LDFLAGS=(
     --preload-file "$WAD@/doom1.wad"
 )
 
-rm -rf "$OUT"
-mkdir -p "$OUT"
+rm -rf "$OUT" "$OBJ"
+mkdir -p "$OUT" "$OBJ/engine" "$OBJ/platform"
 
-CMD=(emcc "${CFLAGS[@]}" "${SOURCES[@]}" "${LDFLAGS[@]}" -o "$OUT/doom.js")
+run() {
+    echo "+ $*"
+    "$@"
+}
 
 echo "emcc $EMCC_VERSION"
-echo "+ ${CMD[*]}"
-"${CMD[@]}"
+
+# emcc -c with several inputs writes <name>.o into the current directory.
+(cd "$OBJ/engine" && run emcc -c "${CFLAGS[@]}" "${ENGINE_CFLAGS[@]}" "${ENGINE_SOURCES[@]}")
+run emcc -c "${CFLAGS[@]}" "${PLATFORM_CFLAGS[@]}" "$PLATFORM_SOURCE" -o "$OBJ/platform/doomgeneric_wasm.o"
+run emcc -O2 "$OBJ"/engine/*.o "$OBJ/platform/doomgeneric_wasm.o" "${LDFLAGS[@]}" -o "$OUT/doom.js"
 
 cp web/index.html "$OUT/index.html"
 
