@@ -67,7 +67,7 @@ void doom_key_event(int pressed, int key)
         return;
     }
 
-    key_queue[key_queue_write] = (uint16_t)(pressed ? 0x100 : 0 | key);
+    key_queue[key_queue_write] = (uint16_t)((pressed ? 0x100 : 0) | key);
     key_queue_write = next;
 }
 
