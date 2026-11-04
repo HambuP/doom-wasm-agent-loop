@@ -115,6 +115,18 @@ function frameLooksRendered(f) {
 
 const REGION_STATUS = { x0: 0, y0: 0.84, x1: 1, y1: 1 };
 const REGION_AMMO = { x0: 0, y0: 0.84, x1: 0.15, y1: 1 };
+// Title logo (red "DOOM" letters) and the 3D view above the status bar.
+const REGION_LOGO = { x0: 0.2, y0: 0.15, x1: 0.8, y1: 0.5 };
+const REGION_VIEW = { x0: 0.1, y0: 0.15, x1: 0.9, y1: 0.7 };
+
+// T9 predicate: count clearly red-dominant vs. blue-dominant samples.
+function redBlueBalance(f, region) {
+  let red = 0, blue = 0;
+  for (const [r, , b] of samples(f, region)) {
+    if (r > b + 40) red++; else if (b > r + 40) blue++;
+  }
+  return { red, blue, ok: red > 2 * blue && red > 0 };
+}
 
 async function frameCountDelta(page, ms) {
   const a = await page.evaluate(() => window.doomFrameCount | 0);
@@ -183,6 +195,9 @@ function selfTest() {
   const black = synth(W, H, () => [0, 0, 0, 255]);
   const transparent = synth(W, H, (x, y) => [(x * 7 + y * 13) & 255, (x * 3) & 255, (y * 5) & 255, 0]);
   const mostlyOne = synth(W, H, (x, y) => (x < 300 ? [20, 20, 20, 255] : [x & 255, y & 255, 9, 255]));
+  const reddish = synth(W, H, (x, y) => [180 + (x & 63), (y * 3) & 63, (x + y) & 31, 255]);
+  const swapped = { ...reddish, data: reddish.data.slice() };
+  for (let i = 0; i < swapped.data.length; i += 4) [swapped.data[i], swapped.data[i + 2]] = [swapped.data[i + 2], swapped.data[i]];
   const cases = [
     ['realistic frame accepted by T4', frameLooksRendered(noise).ok === true],
     ['blank frame rejected by T4', frameLooksRendered(black).ok === false],
@@ -191,6 +206,9 @@ function selfTest() {
     ['identical frames rejected by change checks', diffFrac(noise, noise) < 0.02],
     ['different frames accepted by change checks', diffFrac(noise, noise2) >= 0.10],
     ['ammo region unchanged rejected by T6', diffFrac(noise, noise, REGION_AMMO) < 0.01],
+    ['red frame accepted by T9', redBlueBalance(reddish, REGION_LOGO).ok === true],
+    ['R/B-swapped frame rejected by T9', redBlueBalance(swapped, REGION_LOGO).ok === false],
+    ['moving view rejected by T10', diffFrac(noise, noise2, REGION_VIEW) >= 0.10],
   ];
   let ok = true;
   for (const [name, pass] of cases) {
@@ -233,7 +251,7 @@ async function main() {
   }
 
   if (!fs.existsSync(path.join(DIST, 'index.html'))) {
-    for (const id of ['T2 serve', 'T3 boots', 'T4 pixels', 'T5 input', 'T6 gameplay', 'T7 stability', 'T8 WAD'])
+    for (const id of ['T2 serve', 'T3 boots', 'T4 pixels', 'T5 input', 'T6 gameplay', 'T7 stability', 'T8 WAD', 'T9 colors', 'T10 idle'])
       record(id, false, { reason: 'dist/index.html missing' });
     return finish(results, outDir);
   }
@@ -274,19 +292,36 @@ async function main() {
     } else record('T4 pixels', false, { reason: 'not ready' });
 
     // T5 input
-    let level = null;
+    let level = null, titleFrame = null, idleFrame = null;
     if (ready) {
       await page.click('#canvas').catch(() => {});
       const before = await grab(page);
       const ng = await startNewGame(page);
       level = ng.level;
       await shot(page, 't5-level');
+      titleFrame = ng.title;
+      // T10 idle: no keys held for 2 s right after spawning -> player must not move.
+      await page.waitForTimeout(2000);
+      idleFrame = await grab(page);
+      await shot(page, 't10-idle');
       const menuDiff = diffFrac(before, ng.menu);
       const levelDiff = diffFrac(ng.menu, ng.level);
       const statusDiff = diffFrac(ng.title, ng.level, REGION_STATUS);
       record('T5 input', menuDiff >= 0.02 && levelDiff >= 0.10 && statusDiff >= 0.05,
         { menuDiff: +menuDiff.toFixed(3), levelDiff: +levelDiff.toFixed(3), statusBarDiff: +statusDiff.toFixed(3) });
     } else record('T5 input', false, { reason: 'not ready' });
+
+    // T9 colors: title logo and ammo digits are red in the DOOM palette.
+    if (titleFrame && level) {
+      const logo = redBlueBalance(firstFrame, REGION_LOGO), ammo = redBlueBalance(level, REGION_AMMO);
+      record('T9 colors', logo.ok && ammo.ok, { logo, ammoDigits: ammo });
+    } else record('T9 colors', false, { reason: 'level not reached' });
+
+    // T10 idle: view static with no input (catches runaway input or game clock).
+    if (idleFrame) {
+      const idle = diffFrac(level, idleFrame, REGION_VIEW);
+      record('T10 idle', idle < 0.10, { idleViewDiff: +idle.toFixed(3) });
+    } else record('T10 idle', false, { reason: 'level not reached' });
 
     // T6 gameplay
     if (level) {
