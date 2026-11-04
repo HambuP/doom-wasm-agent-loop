@@ -37,7 +37,7 @@ unique RGB triples among sampled pixels.
 
 | ID | Criterion (all must hold) | Negative control (must FAIL) |
 |----|---------------------------|------------------------------|
-| T1 build | `bash platform/build.sh` exits 0 within 10 min; `dist/` contains `index.html`, `doom.js`, `doom.wasm`, `doom.data`; `doom.wasm` > 500 KB. | Missing/empty `doom.wasm` or nonzero exit fails. |
+| T1 build | `bash platform/build.sh` exits 0 within 10 min; `dist/` contains `index.html`, `doom.js`, `doom.wasm`, `doom.data`; `doom.wasm` > 300 KiB (307,200 bytes; was 500 KB, see "Criteria changes"). | Missing/empty `doom.wasm` or nonzero exit fails. |
 | T2 serve | `doom.wasm` response has `Content-Type: application/wasm`; during the first 10 s after load there are 0 console errors, 0 `pageerror`s, 0 failed requests, 0 HTTP ≥ 400 responses. | Serving wasm with wrong MIME, or a 404 for `doom.data`, fails. |
 | T3 boots | `window.doomReady === true` within 30 s of navigation; `doomFrameCount` increases by ≥ 20 over a 3 s window. | A page that never sets `doomReady`, or a frozen counter, fails. |
 | T4 pixels | Canvas frame: ≥ 16 distinct colors; < 90 % of samples are a single color; **every** sampled pixel has alpha 255 (catches BGRX→RGBA bugs). A frame captured ≥ 6 s later (title/demo cycle) differs from the first drawn frame by diff fraction ≥ 0.05. | `--self-test`: an all-black frame fails (colors), a frame with alpha 0 fails (alpha), two identical frames fail (change). |
@@ -69,3 +69,9 @@ real build (regression injection is done by the loop/instructor).
 - Save/load, later levels, and full episode play are not covered.
 - Timing thresholds may flake on a heavily loaded machine; failures should be
   re-run once before being reported as regressions, and both results kept.
+
+## Criteria changes
+
+| Date | Check | Change | Reason |
+|------|-------|--------|--------|
+| 2026-11-04 | T1 | `doom.wasm` size floor lowered from 500 KB to 300 KiB (307,200 bytes). | The 500 KB figure was a guess made before the port existed (rev `37dfee6`). The real build at `62b1bcd`/`ac94313` produces a 382,276-byte `doom.wasm` that is complete and boots. The floor still rejects missing, empty or stub modules; it is not evidence of fidelity. Requested by the user; applied after seeing the failing result, so it is a loosening and is recorded as such. Prior failing evidence under `artifacts/runs/` is preserved. |

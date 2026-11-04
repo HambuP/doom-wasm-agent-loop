@@ -1,0 +1,111 @@
+{
+  "runId": "play-ac94313-20261104T130849",
+  "git": {
+    "commit": "ac943136adb9219d4be44a0a91cd2695199bed85",
+    "dirty": true,
+    "status": "?? artifacts/plan.md\n?? artifacts/review-iter1-1888d9c.md\n?? artifacts/runs/play-ac94313-20261104T130849/\n?? artifacts/runs/tester-62b1bcd/\n?? artifacts/runs/tester-baseline-37dfee6/"
+  },
+  "ok": true,
+  "steps": [
+    {
+      "step": 1,
+      "label": "title",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/01-title.png",
+      "frameCount": 6,
+      "t": "2026-11-04T21:08:49.933Z"
+    },
+    {
+      "step": 2,
+      "label": "menu",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/02-menu.png",
+      "frameCount": 41,
+      "t": "2026-11-04T21:08:50.936Z"
+    },
+    {
+      "step": 3,
+      "label": "episode-select",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/03-episode-select.png",
+      "frameCount": 69,
+      "t": "2026-11-04T21:08:51.735Z"
+    },
+    {
+      "step": 4,
+      "label": "skill-select",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/04-skill-select.png",
+      "frameCount": 97,
+      "t": "2026-11-04T21:08:52.548Z"
+    },
+    {
+      "step": 5,
+      "label": "level-start",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/05-level-start.png",
+      "frameCount": 211,
+      "t": "2026-11-04T21:08:55.751Z"
+    },
+    {
+      "step": 6,
+      "label": "walked-forward",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/06-walked-forward.png",
+      "frameCount": 283,
+      "t": "2026-11-04T21:08:57.831Z"
+    },
+    {
+      "step": 7,
+      "label": "turned-left",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/07-turned-left.png",
+      "frameCount": 314,
+      "t": "2026-11-04T21:08:58.716Z"
+    },
+    {
+      "step": 8,
+      "label": "turned-right",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/08-turned-right.png",
+      "frameCount": 373,
+      "t": "2026-11-04T21:09:00.401Z"
+    },
+    {
+      "step": 9,
+      "label": "firing",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/09-firing.png",
+      "frameCount": 385,
+      "t": "2026-11-04T21:09:00.745Z"
+    },
+    {
+      "step": 10,
+      "label": "after-fire",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/10-after-fire.png",
+      "frameCount": 409,
+      "t": "2026-11-04T21:09:01.434Z"
+    },
+    {
+      "step": 11,
+      "label": "ran-forward",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/11-ran-forward.png",
+      "frameCount": 465,
+      "t": "2026-11-04T21:09:03.018Z"
+    },
+    {
+      "step": 12,
+      "label": "used",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/12-used.png",
+      "frameCount": 500,
+      "t": "2026-11-04T21:09:04.016Z"
+    },
+    {
+      "step": 13,
+      "label": "ingame-menu",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/13-ingame-menu.png",
+      "frameCount": 534,
+      "t": "2026-11-04T21:09:05.013Z"
+    },
+    {
+      "step": 14,
+      "label": "menu-closed",
+      "file": "artifacts/runs/play-ac94313-20261104T130849/screenshots/14-menu-closed.png",
+      "frameCount": 569,
+      "t": "2026-11-04T21:09:06.012Z"
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": []
+}

@@ -1,0 +1,77 @@
+{
+  "runId": "tester-baseline-37dfee6",
+  "startedAt": "2026-11-04T20:42:06.883Z",
+  "git": {
+    "commit": "37dfee6b043b9c56c8fcc87ca752c102f0f56862",
+    "dirty": true,
+    "status": "M tests/CRITERIA.md\n?? artifacts/plan.md\n?? package-lock.json\n?? package.json\n?? tests/play.js\n?? tests/run_all.js"
+  },
+  "checks": [
+    {
+      "id": "self-test",
+      "pass": true,
+      "details": {
+        "note": "synthetic frames; see CRITERIA.md"
+      }
+    },
+    {
+      "id": "T1 build",
+      "pass": false,
+      "details": {
+        "skipped": true,
+        "note": "--skip-build: only checked dist exists"
+      }
+    },
+    {
+      "id": "T2 serve",
+      "pass": false,
+      "details": {
+        "reason": "dist/index.html missing"
+      }
+    },
+    {
+      "id": "T3 boots",
+      "pass": false,
+      "details": {
+        "reason": "dist/index.html missing"
+      }
+    },
+    {
+      "id": "T4 pixels",
+      "pass": false,
+      "details": {
+        "reason": "dist/index.html missing"
+      }
+    },
+    {
+      "id": "T5 input",
+      "pass": false,
+      "details": {
+        "reason": "dist/index.html missing"
+      }
+    },
+    {
+      "id": "T6 gameplay",
+      "pass": false,
+      "details": {
+        "reason": "dist/index.html missing"
+      }
+    },
+    {
+      "id": "T7 stability",
+      "pass": false,
+      "details": {
+        "reason": "dist/index.html missing"
+      }
+    },
+    {
+      "id": "T8 WAD",
+      "pass": false,
+      "details": {
+        "reason": "dist/index.html missing"
+      }
+    }
+  ],
+  "finishedAt": "2026-11-04T20:42:06.919Z",
+  "passed": false
+}

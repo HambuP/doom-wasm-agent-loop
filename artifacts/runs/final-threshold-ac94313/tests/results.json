@@ -1,0 +1,105 @@
+{
+  "runId": "final-threshold-ac94313",
+  "startedAt": "2026-11-04T21:18:51.359Z",
+  "git": {
+    "commit": "ac943136adb9219d4be44a0a91cd2695199bed85",
+    "dirty": true,
+    "status": "M tests/CRITERIA.md\n M tests/run_all.js\n?? artifacts/plan.md\n?? artifacts/review-iter1-1888d9c.md\n?? artifacts/runs/play-ac94313-20261104T130849/\n?? artifacts/runs/test-2026-11-04T21-13-37-677Z/\n?? artifacts/runs/tester-62b1bcd/\n?? artifacts/runs/tester-baseline-37dfee6/\n?? artifacts/runs/tester-t1-threshold-ac94313/\n?? artifacts/runs/verify-threshold-ac94313/"
+  },
+  "checks": [
+    {
+      "id": "self-test",
+      "pass": true,
+      "details": {
+        "note": "synthetic frames; see CRITERIA.md"
+      }
+    },
+    {
+      "id": "T1 build",
+      "pass": true,
+      "details": {
+        "exit": 0,
+        "missing": [],
+        "wasmSize": 382276,
+        "minWasmBytes": 307200,
+        "log": "artifacts/runs/final-threshold-ac94313/tests/build.log"
+      }
+    },
+    {
+      "id": "T3 boots",
+      "pass": true,
+      "details": {
+        "ready": true,
+        "readyMs": 87,
+        "framesIn3s": 105
+      }
+    },
+    {
+      "id": "T2 serve",
+      "pass": true,
+      "details": {
+        "wasmType": "application/wasm",
+        "consoleErrors": [],
+        "pageErrors": [],
+        "failed": [],
+        "badResponses": []
+      }
+    },
+    {
+      "id": "T4 pixels",
+      "pass": true,
+      "details": {
+        "ok": true,
+        "reasons": [],
+        "stats": {
+          "distinct": 114,
+          "topFrac": 0.0805,
+          "alphaBad": 0,
+          "n": 16000
+        },
+        "changeVsFirst": 0.936
+      }
+    },
+    {
+      "id": "T5 input",
+      "pass": true,
+      "details": {
+        "menuDiff": 0.487,
+        "levelDiff": 0.638,
+        "statusBarDiff": 0.108
+      }
+    },
+    {
+      "id": "T6 gameplay",
+      "pass": true,
+      "details": {
+        "walkDiff": 0.275,
+        "turnDiff": 0.364,
+        "ammoRegionDiff": 0.143
+      }
+    },
+    {
+      "id": "T7 stability",
+      "pass": true,
+      "details": {
+        "crashed": false,
+        "pageErrors": [],
+        "framesIn3sAtEnd": 105,
+        "seed": 12345
+      }
+    },
+    {
+      "id": "T8 WAD",
+      "pass": true,
+      "details": {
+        "external": [],
+        "wadRequests": [],
+        "dataSize": 4196020,
+        "wadSize": 4196020,
+        "levelReached": true
+      }
+    }
+  ],
+  "finishedAt": "2026-11-04T21:20:41.987Z",
+  "passed": true
+}

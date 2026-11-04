@@ -10,6 +10,8 @@ const { spawnSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
+// T1 floor; lowered from 500 KiB, see tests/CRITERIA.md "Criteria changes".
+const MIN_WASM_BYTES = 300 * 1024;
 const WAD_SIZE = fs.existsSync(path.join(ROOT, 'assets/doom1.wad'))
   ? fs.statSync(path.join(ROOT, 'assets/doom1.wad')).size : 4196020;
 
@@ -224,8 +226,8 @@ async function main() {
     const files = ['index.html', 'doom.js', 'doom.wasm', 'doom.data'];
     const missing = files.filter((f) => !fs.existsSync(path.join(DIST, f)));
     const wasmSize = missing.includes('doom.wasm') ? 0 : fs.statSync(path.join(DIST, 'doom.wasm')).size;
-    record('T1 build', b.status === 0 && !missing.length && wasmSize > 500 * 1024,
-      { exit: b.status, missing, wasmSize, log: path.relative(ROOT, path.join(outDir, 'build.log')) });
+    record('T1 build', b.status === 0 && !missing.length && wasmSize > MIN_WASM_BYTES,
+      { exit: b.status, missing, wasmSize, minWasmBytes: MIN_WASM_BYTES, log: path.relative(ROOT, path.join(outDir, 'build.log')) });
   } else {
     record('T1 build', fs.existsSync(path.join(DIST, 'doom.wasm')), { skipped: true, note: '--skip-build: only checked dist exists' });
   }

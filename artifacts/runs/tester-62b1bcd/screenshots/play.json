@@ -1,0 +1,111 @@
+{
+  "runId": "tester-62b1bcd",
+  "git": {
+    "commit": "ac943136adb9219d4be44a0a91cd2695199bed85",
+    "dirty": true,
+    "status": "?? artifacts/plan.md\n?? artifacts/review-iter1-1888d9c.md\n?? artifacts/runs/tester-62b1bcd/\n?? artifacts/runs/tester-baseline-37dfee6/"
+  },
+  "ok": true,
+  "steps": [
+    {
+      "step": 1,
+      "label": "title",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/01-title.png",
+      "frameCount": 6,
+      "t": "2026-11-04T21:07:20.399Z"
+    },
+    {
+      "step": 2,
+      "label": "menu",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/02-menu.png",
+      "frameCount": 41,
+      "t": "2026-11-04T21:07:21.407Z"
+    },
+    {
+      "step": 3,
+      "label": "episode-select",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/03-episode-select.png",
+      "frameCount": 70,
+      "t": "2026-11-04T21:07:22.227Z"
+    },
+    {
+      "step": 4,
+      "label": "skill-select",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/04-skill-select.png",
+      "frameCount": 98,
+      "t": "2026-11-04T21:07:23.036Z"
+    },
+    {
+      "step": 5,
+      "label": "level-start",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/05-level-start.png",
+      "frameCount": 211,
+      "t": "2026-11-04T21:07:26.230Z"
+    },
+    {
+      "step": 6,
+      "label": "walked-forward",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/06-walked-forward.png",
+      "frameCount": 284,
+      "t": "2026-11-04T21:07:28.313Z"
+    },
+    {
+      "step": 7,
+      "label": "turned-left",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/07-turned-left.png",
+      "frameCount": 315,
+      "t": "2026-11-04T21:07:29.201Z"
+    },
+    {
+      "step": 8,
+      "label": "turned-right",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/08-turned-right.png",
+      "frameCount": 373,
+      "t": "2026-11-04T21:07:30.880Z"
+    },
+    {
+      "step": 9,
+      "label": "firing",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/09-firing.png",
+      "frameCount": 386,
+      "t": "2026-11-04T21:07:31.237Z"
+    },
+    {
+      "step": 10,
+      "label": "after-fire",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/10-after-fire.png",
+      "frameCount": 410,
+      "t": "2026-11-04T21:07:31.916Z"
+    },
+    {
+      "step": 11,
+      "label": "ran-forward",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/11-ran-forward.png",
+      "frameCount": 465,
+      "t": "2026-11-04T21:07:33.497Z"
+    },
+    {
+      "step": 12,
+      "label": "used",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/12-used.png",
+      "frameCount": 500,
+      "t": "2026-11-04T21:07:34.498Z"
+    },
+    {
+      "step": 13,
+      "label": "ingame-menu",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/13-ingame-menu.png",
+      "frameCount": 536,
+      "t": "2026-11-04T21:07:35.510Z"
+    },
+    {
+      "step": 14,
+      "label": "menu-closed",
+      "file": "artifacts/runs/tester-62b1bcd/screenshots/14-menu-closed.png",
+      "frameCount": 574,
+      "t": "2026-11-04T21:07:36.607Z"
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": []
+}
