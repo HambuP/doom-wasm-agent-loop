@@ -1,0 +1,128 @@
+{
+  "runId": "tester-baseline-de0dfe0",
+  "startedAt": "2026-11-04T22:04:46.085Z",
+  "git": {
+    "commit": "de0dfe0eac5837b848f6bce492f7d546c3ab23c1",
+    "dirty": true,
+    "status": "M tests/run_all.js\n?? node_modules"
+  },
+  "checks": [
+    {
+      "id": "self-test",
+      "pass": true,
+      "details": {
+        "note": "synthetic frames; see CRITERIA.md"
+      }
+    },
+    {
+      "id": "T1 build",
+      "pass": true,
+      "details": {
+        "exit": 0,
+        "missing": [],
+        "wasmSize": 382200,
+        "minWasmBytes": 307200,
+        "log": "artifacts/runs/tester-baseline-de0dfe0/tests/build.log"
+      }
+    },
+    {
+      "id": "T3 boots",
+      "pass": true,
+      "details": {
+        "ready": true,
+        "readyMs": 103,
+        "framesIn3s": 104
+      }
+    },
+    {
+      "id": "T2 serve",
+      "pass": true,
+      "details": {
+        "wasmType": "application/wasm",
+        "consoleErrors": [],
+        "pageErrors": [],
+        "failed": [],
+        "badResponses": []
+      }
+    },
+    {
+      "id": "T4 pixels",
+      "pass": true,
+      "details": {
+        "ok": true,
+        "reasons": [],
+        "stats": {
+          "distinct": 114,
+          "topFrac": 0.0805,
+          "alphaBad": 0,
+          "n": 16000
+        },
+        "changeVsFirst": 0.935
+      }
+    },
+    {
+      "id": "T5 input",
+      "pass": true,
+      "details": {
+        "menuDiff": 0.658,
+        "levelDiff": 0.681,
+        "statusBarDiff": 0.101
+      }
+    },
+    {
+      "id": "T9 colors",
+      "pass": true,
+      "details": {
+        "logo": {
+          "red": 2218,
+          "blue": 247,
+          "ok": true
+        },
+        "ammoDigits": {
+          "red": 79,
+          "blue": 0,
+          "ok": true
+        }
+      }
+    },
+    {
+      "id": "T10 idle",
+      "pass": true,
+      "details": {
+        "idleViewDiff": 0
+      }
+    },
+    {
+      "id": "T6 gameplay",
+      "pass": true,
+      "details": {
+        "walkDiff": 0.316,
+        "turnDiff": 0.396,
+        "ammoRegionDiff": 0.143
+      }
+    },
+    {
+      "id": "T7 stability",
+      "pass": true,
+      "details": {
+        "crashed": false,
+        "pageErrors": [],
+        "framesIn3sAtEnd": 105,
+        "seed": 12345
+      }
+    },
+    {
+      "id": "T8 WAD",
+      "pass": true,
+      "details": {
+        "external": [],
+        "wadRequests": [],
+        "dataSize": 4196020,
+        "wadSize": 4196020,
+        "levelReached": true
+      }
+    }
+  ],
+  "finishedAt": "2026-11-04T22:06:45.213Z",
+  "passed": true
+}

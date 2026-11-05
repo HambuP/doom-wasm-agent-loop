@@ -1,0 +1,128 @@
+{
+  "runId": "coder-iter1-90e8a40",
+  "startedAt": "2026-11-04T22:12:19.621Z",
+  "git": {
+    "commit": "90e8a4095c28a9c9e157e535b1e7b4f38f1c3505",
+    "dirty": true,
+    "status": "M tests/CRITERIA.md\n M tests/run_all.js\n?? artifacts/plan_iter1_f933c23.md\n?? artifacts/runs/coder-iter1-90e8a40/\n?? artifacts/runs/coder-iter1-fix-f933c23/\n?? artifacts/runs/test-2026-11-04T21-49-23-940Z/\n?? artifacts/runs/test-2026-11-04T22-08-12-651Z/\n?? artifacts/runs/tester-baseline-de0dfe0/\n?? artifacts/runs/tester-regress-f933c23/\n?? artifacts/state.json\n?? artifacts/test_report_f933c23_vs_de0dfe0.md"
+  },
+  "checks": [
+    {
+      "id": "self-test",
+      "pass": true,
+      "details": {
+        "note": "synthetic frames; see CRITERIA.md"
+      }
+    },
+    {
+      "id": "T1 build",
+      "pass": true,
+      "details": {
+        "exit": 0,
+        "missing": [],
+        "wasmSize": 382276,
+        "minWasmBytes": 307200,
+        "log": "artifacts/runs/coder-iter1-90e8a40/tests/build.log"
+      }
+    },
+    {
+      "id": "T3 boots",
+      "pass": true,
+      "details": {
+        "ready": true,
+        "readyMs": 79,
+        "framesIn3s": 105
+      }
+    },
+    {
+      "id": "T2 serve",
+      "pass": true,
+      "details": {
+        "wasmType": "application/wasm",
+        "consoleErrors": [],
+        "pageErrors": [],
+        "failed": [],
+        "badResponses": []
+      }
+    },
+    {
+      "id": "T4 pixels",
+      "pass": true,
+      "details": {
+        "ok": true,
+        "reasons": [],
+        "stats": {
+          "distinct": 112,
+          "topFrac": 0.081,
+          "alphaBad": 0,
+          "n": 16000
+        },
+        "changeVsFirst": 0.936
+      }
+    },
+    {
+      "id": "T5 input",
+      "pass": true,
+      "details": {
+        "menuDiff": 0.507,
+        "levelDiff": 0.646,
+        "statusBarDiff": 0.105
+      }
+    },
+    {
+      "id": "T9 colors",
+      "pass": true,
+      "details": {
+        "logo": {
+          "red": 2218,
+          "blue": 247,
+          "ok": true
+        },
+        "ammoDigits": {
+          "red": 79,
+          "blue": 0,
+          "ok": true
+        }
+      }
+    },
+    {
+      "id": "T10 idle",
+      "pass": true,
+      "details": {
+        "idleViewDiff": 0
+      }
+    },
+    {
+      "id": "T6 gameplay",
+      "pass": true,
+      "details": {
+        "walkDiff": 0.316,
+        "turnDiff": 0.393,
+        "ammoRegionDiff": 0.143
+      }
+    },
+    {
+      "id": "T7 stability",
+      "pass": true,
+      "details": {
+        "crashed": false,
+        "pageErrors": [],
+        "framesIn3sAtEnd": 105,
+        "seed": 12345
+      }
+    },
+    {
+      "id": "T8 WAD",
+      "pass": true,
+      "details": {
+        "external": [],
+        "wadRequests": [],
+        "dataSize": 4196020,
+        "wadSize": 4196020,
+        "levelReached": true
+      }
+    }
+  ],
+  "finishedAt": "2026-11-04T22:14:11.257Z",
+  "passed": true
+}

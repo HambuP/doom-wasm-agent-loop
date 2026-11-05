@@ -1,0 +1,24 @@
+PASS  self-test: realistic frame accepted by T4
+PASS  self-test: blank frame rejected by T4
+PASS  self-test: alpha-0 (BGRX) frame rejected by T4
+PASS  self-test: single-color-dominated frame rejected by T4
+PASS  self-test: identical frames rejected by change checks
+PASS  self-test: different frames accepted by change checks
+PASS  self-test: ammo region unchanged rejected by T6
+PASS  self-test: red frame accepted by T9
+PASS  self-test: R/B-swapped frame rejected by T9
+PASS  self-test: moving view rejected by T10
+PASS  self-test  {"note":"synthetic frames; see CRITERIA.md"}
+PASS  T1 build  {"exit":0,"missing":[],"wasmSize":382273,"minWasmBytes":307200,"log":"artifacts/runs/tester-regress-f933c23/tests/build.log"}
+PASS  T3 boots  {"ready":true,"readyMs":103,"framesIn3s":104}
+PASS  T2 serve  {"wasmType":"application/wasm","consoleErrors":[],"pageErrors":[],"failed":[],"badResponses":[]}
+PASS  T4 pixels  {"ok":true,"reasons":[],"stats":{"distinct":114,"topFrac":0.0805625,"alphaBad":0,"n":16000},"changeVsFirst":0.936}
+PASS  T5 input  {"menuDiff":0.541,"levelDiff":0.592,"statusBarDiff":0.089}
+FAIL  T9 colors  {"logo":{"red":247,"blue":2218,"ok":false},"ammoDigits":{"red":0,"blue":58,"ok":false}}
+FAIL  T10 idle  {"idleViewDiff":0.658}
+FAIL  T6 gameplay  {"walkDiff":0.456,"turnDiff":0.427,"ammoRegionDiff":0}
+PASS  T7 stability  {"crashed":false,"pageErrors":[],"framesIn3sAtEnd":105,"seed":12345}
+PASS  T8 WAD  {"external":[],"wadRequests":[],"dataSize":4196020,"wadSize":4196020,"levelReached":true}
+
+FAILED: T9 colors, T10 idle, T6 gameplay
+commit f933c23f00998a76219aa77efc4773d8de1e3d54 (dirty); results: artifacts/runs/tester-regress-f933c23/tests/results.json

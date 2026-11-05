@@ -1,0 +1,128 @@
+{
+  "runId": "tester-regress-f933c23",
+  "startedAt": "2026-11-04T22:04:46.085Z",
+  "git": {
+    "commit": "f933c23f00998a76219aa77efc4773d8de1e3d54",
+    "dirty": true,
+    "status": "M tests/run_all.js\n?? artifacts/plan_iter1_f933c23.md\n?? artifacts/runs/test-2026-11-04T21-49-23-940Z/\n?? artifacts/state.json"
+  },
+  "checks": [
+    {
+      "id": "self-test",
+      "pass": true,
+      "details": {
+        "note": "synthetic frames; see CRITERIA.md"
+      }
+    },
+    {
+      "id": "T1 build",
+      "pass": true,
+      "details": {
+        "exit": 0,
+        "missing": [],
+        "wasmSize": 382273,
+        "minWasmBytes": 307200,
+        "log": "artifacts/runs/tester-regress-f933c23/tests/build.log"
+      }
+    },
+    {
+      "id": "T3 boots",
+      "pass": true,
+      "details": {
+        "ready": true,
+        "readyMs": 103,
+        "framesIn3s": 104
+      }
+    },
+    {
+      "id": "T2 serve",
+      "pass": true,
+      "details": {
+        "wasmType": "application/wasm",
+        "consoleErrors": [],
+        "pageErrors": [],
+        "failed": [],
+        "badResponses": []
+      }
+    },
+    {
+      "id": "T4 pixels",
+      "pass": true,
+      "details": {
+        "ok": true,
+        "reasons": [],
+        "stats": {
+          "distinct": 114,
+          "topFrac": 0.0805625,
+          "alphaBad": 0,
+          "n": 16000
+        },
+        "changeVsFirst": 0.936
+      }
+    },
+    {
+      "id": "T5 input",
+      "pass": true,
+      "details": {
+        "menuDiff": 0.541,
+        "levelDiff": 0.592,
+        "statusBarDiff": 0.089
+      }
+    },
+    {
+      "id": "T9 colors",
+      "pass": false,
+      "details": {
+        "logo": {
+          "red": 247,
+          "blue": 2218,
+          "ok": false
+        },
+        "ammoDigits": {
+          "red": 0,
+          "blue": 58,
+          "ok": false
+        }
+      }
+    },
+    {
+      "id": "T10 idle",
+      "pass": false,
+      "details": {
+        "idleViewDiff": 0.658
+      }
+    },
+    {
+      "id": "T6 gameplay",
+      "pass": false,
+      "details": {
+        "walkDiff": 0.456,
+        "turnDiff": 0.427,
+        "ammoRegionDiff": 0
+      }
+    },
+    {
+      "id": "T7 stability",
+      "pass": true,
+      "details": {
+        "crashed": false,
+        "pageErrors": [],
+        "framesIn3sAtEnd": 105,
+        "seed": 12345
+      }
+    },
+    {
+      "id": "T8 WAD",
+      "pass": true,
+      "details": {
+        "external": [],
+        "wadRequests": [],
+        "dataSize": 4196020,
+        "wadSize": 4196020,
+        "levelReached": true
+      }
+    }
+  ],
+  "finishedAt": "2026-11-04T22:06:45.117Z",
+  "passed": false
+}
